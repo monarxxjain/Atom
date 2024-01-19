@@ -273,7 +273,7 @@ useFrame((state, delta) => {
 
   // if(elapsedTime>9){ setElapsedTime(0)}
 
-  const frameRate = 143.7; // Frames per second
+  const frameRate = 60; // Frames per second
   const duration = 5; // Duration for two complete rotations in seconds
 
   const rotationSpeed = (2 * Math.PI) / (frameRate * duration);
