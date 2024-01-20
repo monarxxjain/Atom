@@ -1,11 +1,5 @@
 import { OrbitControls } from '@react-three/drei'
 import { Perf } from 'r3f-perf'
-import Model from './Model.js'
-import { Suspense } from 'react'
-import Placeholder from './Placeholder.js'
-import Hamburger from './Hamburger.js'
-import Fox from './Fox.js'
-import  Atom2 from './Atom2.js'
 import { MeshNormalMaterial, MeshStandardMaterial, TorusGeometry } from 'three'
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
@@ -14,30 +8,8 @@ import * as THREE from 'three';
 export default function Experience()
 {
 
-        // const groupRef = useRef();
         const groupRef2 = useRef();
         const groupRef3 = useRef();
-
-      
-        // // This function will be called on each frame to update the rotation
-        // useFrame(() => {
-        //   if (groupRef.current) {
-        //     // Rotate the group on each frame
-        //     groupRef.current.rotation.x += 0.005;
-        //     groupRef.current.rotation.y += 0.005;
-        //     groupRef.current.rotation.z += 0.009;
-
-        //     groupRef2.current.rotation.x += 0.003;
-        //     groupRef2.current.rotation.y += 0.003;
-        //     groupRef2.current.rotation.z += 0.009;
-
-
-        //     groupRef3.current.rotation.x += 0.002;
-        //     groupRef3.current.rotation.y += 0.002;
-        //     groupRef3.current.rotation.z += 0.009;
- 
-        // }
-        // }); 
     
 
 
@@ -50,25 +22,11 @@ export default function Experience()
           if (groupRef1.current) {
             // Rotate the group in x and y axes for the first 3 seconds
             if (elapsedTime.current <3) {
-                // groupRef.current.rotation.z += 0.005;
-                // groupRef2.current.rotation.z += 0.005;
-                // groupRef3.current.rotation.z += 0.005;
                 groupRef1.current.rotation.y += 0.025;
 
 
             } else {
-              // After 3 seconds, keep rotating in the z axis
-              // groupRef.current.rotation.x += 0.005;
-              // groupRef.current.rotation.y += 0.005;
-// 
-              //  groupRef2.current.rotation.x += 0.003;
-              //  groupRef2.current.rotation.y += 0.003;
-
-            // groupRef3.current.rotation.x += 0.002;
-            // groupRef3.current.rotation.y += 0.002;
-
             groupRef1.current.rotation.x += 0.042;
-            // groupRef1.current.rotation.z += 0.042;
             groupRef1.current.rotation.y += 0.025;
 
             }
@@ -82,44 +40,6 @@ export default function Experience()
 
 
 
-
-    //-------------------------
-
-// const Neucleus  = [];
-
-// const SphereOfSpheres = ({ sphereCount }) => {
-//   const sphereGroup = useRef();
-
-//   const createSphere = (position, color) => {
-//     return (
-//       <mesh position={position} scale={5} key={position.toString()}>
-//         <sphereGeometry args={[0.1, 32, 32]} />
-//         <meshStandardMaterial color={color} />
-//       </mesh>
-//     );
-//   };
-
-//   const createSpheres = () => {
-//     const spheres = [];
-//     for (let i = 0; i < sphereCount; i++) {
-//       const phi = Math.acos(-1 + Math.random() * 2);
-//       const theta = Math.random() * 2 * Math.PI;
-//       const radius = Math.cbrt(Math.random()) * 0.5; // Use cubic root for more even distribution
-//       const color = i % 2 === 0 ? 0xff0000 : 0x000000; // Alternate between red and black
-//       const x = radius * Math.sin(phi) * Math.cos(theta)*1.4;
-//       const y = radius * Math.sin(phi) * Math.sin(theta)*1.4;
-//       const z = radius * Math.cos(phi)*1.4*Math.sin(theta);
-//       spheres.push(createSphere([x, y, z], color));
-//     }
-//     return spheres;
-//   };
-
-//   return (
-//     <group ref={sphereGroup}>
-//       {createSpheres()}
-//     </group>
-//   );
-// };
 
 
 
@@ -204,12 +124,9 @@ const Nucleus = ({ protonCount, neutronCount }) => {
 
 const config = [2,8,18,18,32,32];
 
-// config.map((x,index)=>{ console.log(index);- })
 
 config.map((x,i)=>{ 
 
-  // console.log(x);
-  // console.log(i);
 
   return (
     <mesh scale={0.5}>
@@ -221,33 +138,6 @@ config.map((x,i)=>{
 
  })
 
-//  const Sphere = () => {
-//   let x = 2;
-//   let i = 1;
-//   const angleIncrement = (Math.PI * 2) / x;
-//   // console.log(angleIncrement);
-
-//   // console.log(x);
-
-//   const radius = (15 + i * 3) / 2;
-//   const spheres = [];
-
-//   for (let num = 1; num <= x; num++) {
-//     console.log(num * angleIncrement);
-//     const angle = num * angleIncrement;
-//     const xPos = radius * Math.cos(angle);
-//     const zPos = radius * Math.sin(angle);
-
-//     spheres.push(
-//       <mesh scale={0.04} position={[xPos, 0, zPos]} key={num}>
-//         <sphereBufferGeometry args={[15, 32, 16]} />
-//         <meshNormalMaterial />
-//       </mesh>
-//     );
-//   }
-
-//   return spheres;
-// };
 
 
 const Shells = ()=>{
@@ -301,7 +191,6 @@ console.log(`Time for 2 rotations: ${time} seconds`);
         groupRef.customAxisRotation += rotationSpeed * delta;
         groupRef.current.rotateOnAxis(customAxis, rotationSpeed * fixedDelta);
       
-        // Calculate the rotation made by the group
         const rotationMade = groupRef.customAxisRotation - previousRotation;
         console.log(rotationSpeed);
         console.log(`delta ${delta}`)
@@ -322,23 +211,11 @@ console.log(`Time for 2 rotations: ${time} seconds`);
 
 
 
-    // console.log(x);
-
     const angleIncrement = (Math.PI * 2) / x;
     const spheres = [];
-
-    // sphere() 
-  
-     
-     
-      // console.log(angleIncrement);
-    
-      // console.log(x);
-    
       const radius = (15 + i * 3) / 2;
     
       for (let num = 1; num <= x; num++) {
-        // console.log(num * angleIncrement);
         const angle = num * angleIncrement;
         const xPos = radius * Math.cos(angle);
         const zPos = radius * Math.sin(angle);
@@ -351,14 +228,6 @@ console.log(`Time for 2 rotations: ${time} seconds`);
         );
       }
     
-    
-
-
-
-    
-
-
-    // console.log(i);
   
     return ( <group  ref={groupRefs[i]} key={i} >
       <mesh scale={0.5} rotation={[Math.PI/2,0,0]} >
@@ -366,7 +235,6 @@ console.log(`Time for 2 rotations: ${time} seconds`);
           <meshStandardMaterial />
         </mesh>
 
-  {/* <Sphere/> */}
   {spheres}
 
         </group>
@@ -386,87 +254,18 @@ console.log(`Time for 2 rotations: ${time} seconds`);
 
         <OrbitControls 
         enablePan={false}
-      
-        // minTargetRadius={4}
-        // maxTargetRadius={4}
-
         minDistance={25}
         maxDistance={70}
         makeDefault />
 
         <directionalLight castShadow position={ [ 1, 2, 3 ] } intensity={ 1.5 } shadow-normalBias={ 0.04 } />
         <ambientLight intensity={ 0.5 } />
-        {/* <Atom2 scale={5}  /> */}
-        
-{/* 
-        <mesh receiveShadow position-y={ - 1 } rotation-x={ - Math.PI * 0.5 } scale={ 10 }>
-            <planeGeometry />
-            <meshStandardMaterial color="greenyellow" />
-        </mesh> */}
-
-        {/* <Suspense fallback={ <Placeholder position-y={ 0.5 } scale={ [ 2, 3, 2 ] } /> }> */}
-            {/* <Hamburger scale={ 0.35 } /> */}
-        {/* </Suspense> */}
-
-
-{/* <Sphere/> */}
-
-
-        {/* <mesh scale={0.1} >
-  <sphereBufferGeometry args={[8, 32, 16]}  />
-  <meshNormalMaterial />
-</mesh> */}
-
-{/* <mesh scale={0.1} position={[0.4,0.4,0.4]} >
-  <sphereBufferGeometry args={[8, 32, 16]}   />
-  <meshNormalMaterial />
-</mesh>
-<mesh scale={0.1} position={[0.4,0.4,-0.4]} >
-  <sphereBufferGeometry args={[8, 32, 16]}   />
-  <meshNormalMaterial />
-</mesh> */}
-{/* 
-        <mesh scale={0.1} >
-  <sphereBufferGeometry args={[15, 32, 16]}  />
-  <meshNormalMaterial />
-</mesh>
-
-<mesh scale={0.04} position={[5,5,5]} >
-  <sphereBufferGeometry args={[15, 32, 16]}  />
-  <meshNormalMaterial />
-</mesh> */}
-
-{/* {spheres} */}
-{/* <mesh scale={0.5}>
-
-<torusBufferGeometry args={[ 10, 0.1, 16, 100]}/>
-<meshNormalMaterial/>
-
-</mesh>
-
-<mesh scale={0.5} rotation-x={90} >
-
-<torusBufferGeometry args={[ 10, 0.1, 16, 100]}/>
-<meshNormalMaterial/>
-
-</mesh>
-
-
-<mesh scale={0.5} rotation-x={-90} >
-
-<torusBufferGeometry args={[ 10, 0.1, 16, 100]}/>
-<meshNormalMaterial/>
-
-</mesh> */}
-      {/* <SphereOfSpheres sphereCount={10} /> */}
-
       <group  scale={5}  >
 
       <Nucleus protonCount={20} neutronCount={20} />
       </group>
 <Shells/>
  
-        {/* <Fox /> */}
 
     </>
 }
