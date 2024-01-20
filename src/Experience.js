@@ -266,46 +266,57 @@ console.log(`Time for 2 rotations: ${time} seconds`);
 
   const groupRefs = config.map(() => useRef());
   const [elapsedTime, setElapsedTime] = useState(0);
-
+  const fixedDelta = 0.016;
   
-useFrame((state, delta) => {
-  setElapsedTime((prev) => prev + delta);
-
-  // if(elapsedTime>9){ setElapsedTime(0)}
-
-  const frameRate = 60; // Frames per second
-  const duration = 5; // Duration for two complete rotations in seconds
-
-  const rotationSpeed = (2 * Math.PI) / (frameRate * duration);
-
-  groupRefs.forEach((groupRef, i) => {
-    const axis = new THREE.Vector3(0, 1, 0);
-
-    if (elapsedTime < 3) {
-      // Rotate only in X-axis for the first 3 seconds
-      groupRef.current.rotateOnAxis(axis, 0.01);
-    } else if (elapsedTime < 3 + duration) {
-      // Rotate in both X and Y axes after 3 seconds
-      const angle = i * 60 * (Math.PI / 180); // Convert 60 degrees to radians
-      const x = Math.cos(angle);
-      const y = Math.sin(angle);
-      const customAxis = new THREE.Vector3(x, 0, y);
-      groupRef.current.rotateOnAxis(customAxis, rotationSpeed);
-    } else {
-      // Stop the rotation after two complete revolutions
-      const targetRotation = 2 * Math.PI * 2;
-      const currentRotation = groupRef.current.rotation.y % (2 * Math.PI);
-      const remainingRotation = targetRotation - currentRotation;
-
-      if (remainingRotation > rotationSpeed) {
-        groupRef.current.rotateOnAxis(axis, rotationSpeed);
-      } else {
-        // Snap to the target rotation when close enough
-        groupRef.current.rotateOnAxis(axis, remainingRotation);
+  useFrame((state, delta) => {
+    setElapsedTime((prev) => prev + fixedDelta);
+    if(elapsedTime>9){  setElapsedTime(0)}
+  
+    const duration = 5; // Duration for two complete rotations in seconds
+  
+    // Calculate rotation speed based on time, not frame rate
+    const rotationSpeed = (2 * Math.PI) / duration;
+  
+    groupRefs.forEach((groupRef, i) => {
+      const axis = new THREE.Vector3(0, 1, 0);
+  
+      if (elapsedTime < 3) {
+        // Rotate only in X-axis for the first 3 seconds
+        groupRef.current.rotateOnAxis(axis, 0.01);
+      } else if (elapsedTime < 3 + duration) {
+        delta = 0.017;
+        // Rotate in both X and Y axes after 3 seconds
+        const angle = i * 60 * (Math.PI / 180); // Convert 60 degrees to radians
+        const x = Math.cos(angle);
+        const y = Math.sin(angle);
+        const customAxis = new THREE.Vector3(x, 0, y);
+      
+        // Track the accumulated rotation on the custom axis
+        if (!groupRef.customAxisRotation) {
+          groupRef.customAxisRotation = 0;
+        }
+      
+        const previousRotation = groupRef.customAxisRotation; // Store previous rotation for logging
+      
+        groupRef.customAxisRotation += rotationSpeed * delta;
+        groupRef.current.rotateOnAxis(customAxis, rotationSpeed * fixedDelta);
+      
+        // Calculate the rotation made by the group
+        const rotationMade = groupRef.customAxisRotation - previousRotation;
+        console.log(rotationSpeed);
+        console.log(`delta ${delta}`)
+      
+        console.log(`Group ${i + 1} Rotation: ${rotationMade} radians`);
       }
-    }
+      else {
+        groupRef.current.rotateOnAxis(axis, 0.01);
+
+      }
+    });
   });
-});
+  
+  
+  
 
   return config.map((x,i)=>{ 
 
@@ -373,7 +384,15 @@ useFrame((state, delta) => {
 
         <Perf position="top-left" />
 
-        <OrbitControls makeDefault />
+        <OrbitControls 
+        enablePan={false}
+      
+        // minTargetRadius={4}
+        // maxTargetRadius={4}
+
+        minDistance={25}
+        maxDistance={70}
+        makeDefault />
 
         <directionalLight castShadow position={ [ 1, 2, 3 ] } intensity={ 1.5 } shadow-normalBias={ 0.04 } />
         <ambientLight intensity={ 0.5 } />
